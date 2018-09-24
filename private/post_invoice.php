@@ -24,6 +24,7 @@ VALUES ('$trans_date', '$description', '$recipt_num', $amount, $formonth, $forye
 if ($conn->query($sql)) {
 	$server_response->status = "success";
 	$server_response->msg = "New Record added successfully";
+	http_response_code(200);
     echo json_encode($server_response);
 } else {
 	$server_response->status = "404";

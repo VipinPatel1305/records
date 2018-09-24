@@ -26,12 +26,13 @@ $sql = "update $tablename set trans_date = '$trans_date', recipt_num = '$recipt_
 
 if ($conn->query($sql) === TRUE) {
     $server_response->status = "success";
-	$server_response->msg = "Record update successful";
+	$server_response->msg = "Record update successful";	
+	http_response_code(200);
     echo json_encode($server_response);
 } else {
    	$server_response->status = "404";
 	$server_response->msg = "Failed to update record";
-	http_response_code(404);
+	http_response_code(500);
     echo json_encode($server_response);
 }
 

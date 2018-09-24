@@ -4,10 +4,13 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 1000");
 header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, X-Requested-With");
+header("Pragma: no-cache");
 
 $request = $_SERVER['REDIRECT_URL'];
 $base_file = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
 
+##know current environment:
+require __DIR__ . '/../private/config.php';
 
 if("$base_file" ==="login.php")
 {
@@ -15,8 +18,18 @@ if("$base_file" ==="login.php")
 }
 else
 {
-    require __DIR__ . '/../private/validate_login.php';
-    $res_scope = validate_login();
+    $res_scope = "test";
+
+    if($DEPLOY_ENV === "PROD")
+    {
+        require __DIR__ . '/../private/validate_login.php';
+        $res_scope = validate_login();
+    }
+    else if($DEPLOY_ENV === "DEV")
+    {
+        $res_scope = "admin";
+    }
+
 
     if($res_scope == "public" || $res_scope == "mcm" || $res_scope == "admin")
     {

@@ -18,7 +18,8 @@ $sql = "delete from  $tablename where $tablename.id = '$id'";
 if ($conn->query($sql) === TRUE) {
     $server_response->status = "success";
 	$server_response->msg = "Record deleted successfully";
-   echo json_encode($server_response);
+	http_response_code(200);
+   	echo json_encode($server_response);
 } else {
     $server_response->status = "404";
 	$server_response->msg = "Failed to delete record";
