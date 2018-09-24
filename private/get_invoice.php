@@ -24,13 +24,15 @@ if($result->num_rows > 0)
 	{
 		$rows[] = $r; 
 	}
+	 echo json_encode($rows);
 }
 else
 {
-	echo "empty result";
+	$server_response->status = "404";
+	$server_response->msg = "Failed to add new record";
+	http_response_code(404);
+    echo json_encode($server_response);
 }
 
-
- echo json_encode($rows);
 $conn->close();
 ?>

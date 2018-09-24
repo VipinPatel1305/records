@@ -17,6 +17,7 @@ else
 {
     require __DIR__ . '/../private/validate_login.php';
     $res_scope = validate_login();
+
     if($res_scope == "public" || $res_scope == "mcm" || $res_scope == "admin")
     {
         switch ($base_file) 

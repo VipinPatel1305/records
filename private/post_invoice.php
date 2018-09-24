@@ -17,17 +17,19 @@ $recipt_num = $decoded["recipt_num"];
 $amount = $decoded["amount"];
 $formonth = $decoded["formonth"];
 $foryear = $decoded["foryear"];
-echo "inserting data invoice";
-echo "formonth: $formonth";
 
 $sql = "INSERT INTO bill_records (trans_date, description, recipt_num, amount, formonth, foryear)
 VALUES ('$trans_date', '$description', '$recipt_num', $amount, $formonth, $foryear)";
 
-if ($conn->query($sql) === TRUE) {
-	 $response = '{"server_responce":"New record create successfully"}';
-    echo json_encode($decoded);
+if ($conn->query($sql)) {
+	$server_response->status = "success";
+	$server_response->msg = "New Record added successfully";
+    echo json_encode($server_response);
 } else {
-    echo json_encode("Error: " . $sql . "<br>" . $conn->error);
+	$server_response->status = "404";
+	$server_response->msg = "Failed to add new record";
+	http_response_code(404);
+    echo json_encode($server_response);
 }
 
 $conn->close();

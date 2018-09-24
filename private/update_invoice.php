@@ -25,9 +25,14 @@ $tablename = "bill_records";
 $sql = "update $tablename set trans_date = '$trans_date', recipt_num = '$recipt_num', amount = $amount, description='$description', formonth='$formonth', foryear='$foryear' where $tablename.id = '$id'";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Record updated successfully";
+    $server_response->status = "success";
+	$server_response->msg = "Record update successful";
+    echo json_encode($server_response);
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+   	$server_response->status = "404";
+	$server_response->msg = "Failed to update record";
+	http_response_code(404);
+    echo json_encode($server_response);
 }
 
 $conn->close();
