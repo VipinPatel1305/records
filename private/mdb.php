@@ -12,9 +12,9 @@
 	else if($DEPLOY_ENV === "PROD")
 	{
 		//update me
-		$username = "root";
-		$password = "root";
-		$dbname = "vip_inventory";
+       $username = "u864826821_vipin";
+       $password = "Y0viGIMBzt0s";
+       $dbname = "u864826821_vipin";
 	}
 	
 ?>
