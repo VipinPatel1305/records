@@ -1,16 +1,35 @@
 
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS");
-header("Access-Control-Max-Age: 1000");
-header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, X-Requested-With");
-header("Pragma: no-cache");
+
+require __DIR__ . '/../private/config.php';
+
+if($DEPLOY_ENV === "DEV")
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+        header('Access-Control-Allow-Headers: token, Content-Type');
+        header('Access-Control-Max-Age: 1728000');
+        header('Content-Length: 0');
+        header('Content-Type: text/plain');
+        $server_response->status = "success";
+        $server_response->msg = "Preflight call";
+        echo json_encode($server_response);
+        die();
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS");
+    header("Access-Control-Max-Age: 1000");
+    header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, X-Requested-With");
+    header("Pragma: no-cache");
+}
 
 $request = $_SERVER['REDIRECT_URL'];
 $base_file = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
 
 ##know current environment:
-require __DIR__ . '/../private/config.php';
+
 
 if("$base_file" ==="login.php")
 {
